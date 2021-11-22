@@ -49,7 +49,7 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 					filter(data -> data.getCountry() == "India")
 					.map(JohnHopkinResponse::getStats)
 					.map(Stat::getConfirmed)
-					.reduce(0f, (total, cases) -> total + cases);
+					.reduce(0f, Float::sum);
 
 			//return the response after rounding it up to 0 decimal places
 			DecimalFormat round = new DecimalFormat("#");

@@ -2,6 +2,7 @@ package com.upgrad.patterns.Service;
 
 import com.upgrad.patterns.Constants.SourceType;
 import com.upgrad.patterns.Interfaces.IndianDiseaseStat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.upgrad.patterns.Constants.SourceType.DiseaseSh;
@@ -11,6 +12,7 @@ import static com.upgrad.patterns.Constants.SourceType.JohnHopkins;
 public class DiseaseCountFacade {
 
    //create a private object indiaDiseaseStat of type IndiaDiseaseStatFactory
+    @Autowired
     private IndiaDiseaseStatFactory indiaDiseaseStat;
 
     //create a public method getDiseaseShCount() that has Object as its return type
