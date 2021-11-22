@@ -16,9 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class JohnHopkinsStrategy implements IndianDiseaseStat {
@@ -39,14 +37,12 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 
 		//try block
 		try {
-
 			//get response from the getJohnHopkinResponses method
 			JohnHopkinResponse[] johnHopkinResponses = getJohnHopkinResponses();
 			//filter the data based such that country equals India (use getCountry() to get the country value)
 			//Map the data to "confirmed" value (use getStats() and getConfirmed() to get stats value and confirmed value)
 			//Reduce the data to get a sum of all the "confirmed" values
-
-			float response = Arrays.stream(johnHopkinResponses).
+			float johnHopkinCountResponses = Arrays.stream(johnHopkinResponses).
 					filter(data -> Objects.equals(data.getCountry(), "India"))
 					.map(JohnHopkinResponse::getStats)
 					.map(Stat::getConfirmed)
@@ -54,7 +50,7 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 
 			//return the response after rounding it up to 0 decimal places
 			DecimalFormat round = new DecimalFormat("#");
-			return round.format(response);
+			return round.format(johnHopkinCountResponses);
 		}
 		//catch block
 		catch (Exception e){
