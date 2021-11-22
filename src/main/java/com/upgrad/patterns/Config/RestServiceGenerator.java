@@ -12,16 +12,15 @@ public class RestServiceGenerator {
 
     private static RestTemplate restTemplate;
 
-    private RestServiceGenerator()
-    {
+    private RestServiceGenerator(){
+
     }
 
     public static RestTemplate GetInstance()
     {
         // return restTemplate object if initialized already
 
-
-        if( restTemplate == null) {
+        if( restTemplate != null) {
             // Initialize restTemplate. This is executed only once.
             restTemplate = new RestTemplateBuilder()
                     .interceptors((request, body, execution) -> {
@@ -31,8 +30,12 @@ public class RestServiceGenerator {
                         return clientHttpResponse;
                     })
                     .build();
+            //return restTemplate object
+            return restTemplate;
         }
-        return restTemplate;
-        //return restTemplate object
+        else{
+            return new RestTemplate();
+        }
+
     }
 }

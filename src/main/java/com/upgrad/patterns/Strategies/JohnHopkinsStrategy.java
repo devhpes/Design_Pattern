@@ -2,6 +2,7 @@ package com.upgrad.patterns.Strategies;
 
 import com.upgrad.patterns.Config.RestServiceGenerator;
 import com.upgrad.patterns.Entity.JohnHopkinResponse;
+import com.upgrad.patterns.Entity.Stat;
 import com.upgrad.patterns.Interfaces.IndianDiseaseStat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,19 +35,33 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 
 	@Override
 	public String GetActiveCount() {
-		
-		
+
 		//try block
+		try {
+
 			//get response from the getJohnHopkinResponses method
+			JohnHopkinResponse[] johnHopkinResponses = getJohnHopkinResponses();
 			//filter the data based such that country equals India (use getCountry() to get the country value)
 			//Map the data to "confirmed" value (use getStats() and getConfirmed() to get stats value and confirmed value)
 			//Reduce the data to get a sum of all the "confirmed" values
-			//return the response after rounding it up to 0 decimal places
-		//catch block
-			//log the error
-			//return null
 
-	
+			float response = Arrays.stream(johnHopkinResponses).
+					filter(data -> data.getCountry() == "India")
+					.map(JohnHopkinResponse::getStats)
+					.map(Stat::getConfirmed)
+					.reduce(0f, (total, cases) -> total + cases);
+
+			//return the response after rounding it up to 0 decimal places
+			DecimalFormat round = new DecimalFormat("#");
+			return round.format(response);
+		}
+		//catch block
+		catch (Exception e){
+			//log the error
+			System.out.println(e.getMessage());
+			//return null
+			return null;
+		}
 
 	}
 

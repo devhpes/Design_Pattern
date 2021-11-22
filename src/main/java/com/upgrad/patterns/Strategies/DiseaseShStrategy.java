@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 @Service
@@ -32,28 +33,19 @@ public class DiseaseShStrategy implements IndianDiseaseStat {
 
     @Override
     public String GetActiveCount() {
-    	//write a try catch block here
-    	
-    	//try block
-    	
-	    	//obtain response from the getDiseaseShResponseResponses() method
-	    	//store it in an object
-	    	
-    		//get the response using the getCases() method
-	    	//return the response after rounding it up to 0 decimal places
-    	try{
+    	try
+        {
+            DiseaseShResponse diseaseShResponse = getDiseaseShResponseResponses();
+            float response = diseaseShResponse.getCases();
+            System.out.println(response);
+            return String.valueOf(response);
+        }
 
-            getDiseaseShResponseResponses();
-        }
-    	
-    	//catch block
-    		//log the error
-    	
-    		//return null
     	catch (Exception e){
-            throw  new IllegalArgumentException("None");
+            System.out.println(e.getMessage());
+            return null;
         }
-    	
+
     }
 
     private DiseaseShResponse getDiseaseShResponseResponses() {
