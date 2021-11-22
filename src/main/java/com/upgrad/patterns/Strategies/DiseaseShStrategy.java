@@ -37,8 +37,7 @@ public class DiseaseShStrategy implements IndianDiseaseStat {
         {
             DiseaseShResponse diseaseShResponse = getDiseaseShResponseResponses();
             float response = diseaseShResponse.getCases();
-            System.out.println(response);
-            return String.valueOf(response);
+            return String.valueOf(Math.round(response));
         }
 
     	catch (Exception e){

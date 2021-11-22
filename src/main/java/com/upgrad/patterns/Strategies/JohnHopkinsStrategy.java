@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +47,7 @@ public class JohnHopkinsStrategy implements IndianDiseaseStat {
 			//Reduce the data to get a sum of all the "confirmed" values
 
 			float response = Arrays.stream(johnHopkinResponses).
-					filter(data -> data.getCountry() == "India")
+					filter(data -> Objects.equals(data.getCountry(), "India"))
 					.map(JohnHopkinResponse::getStats)
 					.map(Stat::getConfirmed)
 					.reduce(0f, Float::sum);
